@@ -57,14 +57,14 @@ class UserInitialViewController: UIViewController {
         }
         
     }
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        guard let jokeDetailVC = segue.destination as? userDetailViewController else {
-//            fatalError("Unexpected segue")
-//        }
-//        guard let selectedIndexPath = tableView.indexPathForSelectedRow
-//            else { fatalError("No row selected") }
-//        jokeDetailVC.userInfo = filteredPersonArr[selectedIndexPath.row]
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let userDetail = segue.destination as? UserDetailViewController else {
+            fatalError("Unexpected segue")
+        }
+        guard let selectedIndexPath = userTable.indexPathForSelectedRow
+            else { fatalError("No row selected") }
+        userDetail.user = filteredPersonArr[selectedIndexPath.row]
+    }
     
 }
 
@@ -79,21 +79,23 @@ extension UserInitialViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = userTable.dequeueReusableCell(withIdentifier: "userCell") as? UserCellTableViewCell
         
-//        ImageHelper.shared.fetchImage(urlString: filteredPersonArr[indexPath.row].picture.thumbnail) { (result) in
-//            DispatchQueue.main.async {
-//                switch result {
-//                case .failure(let error):
-//                    print(error)
-//                case .success(let image):
-//                cell?.userImage.image = image
-//                }
-//            }
-//        }
-        let selected = user[indexPath.row]
+        ImageHelper.shared.fetchImage(urlString: filteredPersonArr[indexPath.row].picture.thumbnail) { (result) in
+            DispatchQueue.main.async {
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success(let image):
+                cell?.userImage.image = image
+              
+                }
+            }
+        }
+        let selected = filteredPersonArr[indexPath.row]
         cell?.age.text = "Age: \(selected.dob.age.description)"
         cell?.userName.text = selected.name.first
         cell?.phone.text = selected.cell
         return cell!
+       
     }
 }
 extension UserInitialViewController: UISearchBarDelegate{

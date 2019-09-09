@@ -10,21 +10,39 @@ import UIKit
 
 class UserDetailViewController: UIViewController {
     var user: User?
+    
+    @IBOutlet weak var age: UILabel!
+    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var address: UILabel!
+    @IBOutlet weak var email: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        setImageUp()
+        loadUp()
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func setImageUp(){
+        ImageHelper.shared.fetchImage(urlString: (user?.picture.large)!) { (result) in
+            DispatchQueue.main.async {
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success(let image):
+                    self.image.image = image
+                }
+            }
+        }
+        image.layer.borderWidth = 1
+        image.layer.masksToBounds = false
+        image.layer.cornerRadius = image.frame.height/2
+        image.clipsToBounds = true
     }
-    */
-
+    func loadUp() {
+        name.text = user?.name.FullName
+        address.text = user?.location.address
+        email.text = user?.phone
+        age.text = user?.dob.age.description
+        
+        
+    }
 }

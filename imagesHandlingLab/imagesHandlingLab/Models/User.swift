@@ -48,15 +48,16 @@ struct fullName:Codable{
     let title: String
     let first: String
     let last: String
-
-    func FullName ()-> String {
+    var FullName: String  {
         return "\(first.capitalized) \(last.capitalized)"
     }
 }
 struct fullAddress: Codable{
     let street: String
     let city: String
-    let state: String
+    var address: String{
+        return "\(street),\(city)"
+    }
 }
 struct picSize: Codable{
     let large: String

@@ -10,15 +10,11 @@ import Foundation
 
 class NetworkManager {
     
-    // TODO: update this to cache
+  
     private init() {}
     
-    /// singleton
+
     static let shared = NetworkManager()
-    
-    //Performs GET requests for any URL
-    //Parameters: URL as a string
-    //Completion: Result with Data in success, AppError in failure
     
     func fetchData(urlString: String,  completionHandler: @escaping (Result<Data,AppError>) -> ()) {
         guard let url = URL(string: urlString) else {

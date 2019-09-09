@@ -77,6 +77,7 @@ extension PokeViewController: UITableViewDataSource, UITableViewDelegate {
                 }
             }
         }
+        
         return cell
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
